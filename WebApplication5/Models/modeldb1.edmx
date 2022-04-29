@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="dkayit">
+          <Key>
+            <PropertyRef Name="kayitDosyaid" />
+          </Key>
+          <Property Name="kayitDosyaid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="kayitUyeid" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="kayitDosyaturu" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Dosya">
+          <Key>
+            <PropertyRef Name="dosyaId" />
+          </Key>
+          <Property Name="dosyaId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dosyaAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dosyaTuru" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Uye">
+          <Key>
+            <PropertyRef Name="uyeId" />
+          </Key>
+          <Property Name="uyeId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="uyeAdsoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="uyeDogtarih" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dkayit_ToDosya">
+          <End Role="Dosya" Type="Self.Dosya" Multiplicity="1" />
+          <End Role="dkayit" Type="Self.dkayit" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Dosya">
+              <PropertyRef Name="dosyaId" />
+            </Principal>
+            <Dependent Role="dkayit">
+              <PropertyRef Name="kayitDosyaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dkayit_ToUye">
+          <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
+          <End Role="dkayit" Type="Self.dkayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="dkayit">
+              <PropertyRef Name="kayitUyeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="dkayit" EntityType="Self.dkayit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dosya" EntityType="Self.Dosya" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uye" EntityType="Self.Uye" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dkayit_ToDosya" Association="Self.FK_dkayit_ToDosya">
+            <End Role="Dosya" EntitySet="Dosya" />
+            <End Role="dkayit" EntitySet="dkayit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dkayit_ToUye" Association="Self.FK_dkayit_ToUye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="dkayit" EntitySet="dkayit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="dkayit">
+          <Key>
+            <PropertyRef Name="kayitDosyaid" />
+          </Key>
+          <Property Name="kayitDosyaid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="kayitUyeid" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="kayitDosyaturu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Dosya" Relationship="Self.FK_dkayit_ToDosya" FromRole="dkayit" ToRole="Dosya" />
+          <NavigationProperty Name="Uye" Relationship="Self.FK_dkayit_ToUye" FromRole="dkayit" ToRole="Uye" />
+        </EntityType>
+        <EntityType Name="Dosya">
+          <Key>
+            <PropertyRef Name="dosyaId" />
+          </Key>
+          <Property Name="dosyaId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dosyaAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dosyaTuru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="dkayit" Relationship="Self.FK_dkayit_ToDosya" FromRole="Dosya" ToRole="dkayit" />
+        </EntityType>
+        <EntityType Name="Uye">
+          <Key>
+            <PropertyRef Name="uyeId" />
+          </Key>
+          <Property Name="uyeId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="uyeAdsoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="uyeDogtarih" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="dkayit" Relationship="Self.FK_dkayit_ToUye" FromRole="Uye" ToRole="dkayit" />
+        </EntityType>
+        <Association Name="FK_dkayit_ToDosya">
+          <End Role="Dosya" Type="Self.Dosya" Multiplicity="1" />
+          <End Role="dkayit" Type="Self.dkayit" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Dosya">
+              <PropertyRef Name="dosyaId" />
+            </Principal>
+            <Dependent Role="dkayit">
+              <PropertyRef Name="kayitDosyaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dkayit_ToUye">
+          <End Role="Uye" Type="Self.Uye" Multiplicity="1" />
+          <End Role="dkayit" Type="Self.dkayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uye">
+              <PropertyRef Name="uyeId" />
+            </Principal>
+            <Dependent Role="dkayit">
+              <PropertyRef Name="kayitUyeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="dkayit" EntityType="Self.dkayit" />
+          <EntitySet Name="Dosya" EntityType="Self.Dosya" />
+          <EntitySet Name="Uye" EntityType="Self.Uye" />
+          <AssociationSet Name="FK_dkayit_ToDosya" Association="Self.FK_dkayit_ToDosya">
+            <End Role="Dosya" EntitySet="Dosya" />
+            <End Role="dkayit" EntitySet="dkayit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dkayit_ToUye" Association="Self.FK_dkayit_ToUye">
+            <End Role="Uye" EntitySet="Uye" />
+            <End Role="dkayit" EntitySet="dkayit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities">
+          <EntitySetMapping Name="dkayit">
+            <EntityTypeMapping TypeName="Database1Model.dkayit">
+              <MappingFragment StoreEntitySet="dkayit">
+                <ScalarProperty Name="kayitDosyaid" ColumnName="kayitDosyaid" />
+                <ScalarProperty Name="kayitUyeid" ColumnName="kayitUyeid" />
+                <ScalarProperty Name="kayitDosyaturu" ColumnName="kayitDosyaturu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dosya">
+            <EntityTypeMapping TypeName="Database1Model.Dosya">
+              <MappingFragment StoreEntitySet="Dosya">
+                <ScalarProperty Name="dosyaId" ColumnName="dosyaId" />
+                <ScalarProperty Name="dosyaAdi" ColumnName="dosyaAdi" />
+                <ScalarProperty Name="dosyaTuru" ColumnName="dosyaTuru" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uye">
+            <EntityTypeMapping TypeName="Database1Model.Uye">
+              <MappingFragment StoreEntitySet="Uye">
+                <ScalarProperty Name="uyeId" ColumnName="uyeId" />
+                <ScalarProperty Name="uyeAdsoyad" ColumnName="uyeAdsoyad" />
+                <ScalarProperty Name="uyeDogtarih" ColumnName="uyeDogtarih" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
